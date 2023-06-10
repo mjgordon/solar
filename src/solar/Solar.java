@@ -3,13 +3,14 @@ package solar;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.event.MouseEvent;
-import sim.SolarSystem;
+import sim_social.World;
 
+@SuppressWarnings("static-access")
 public class Solar extends PApplet{
 	
 	int guiWidth = 800;
 	
-	SolarSystem solarSystem;
+	World world;
 	
 	PGraphics gWorld;
 	
@@ -25,25 +26,31 @@ public class Solar extends PApplet{
 		gWorld = createGraphics(width - guiWidth,height);
 		gUI = createGraphics(guiWidth, height);
 		
-		solarSystem = new SolarSystem();
-		solarSystem.loadDemo();
+		world = new World();
 		
 		frameRate(300);
 	}
 	
 	public void draw() {
-		solarSystem.update();
+		world.update();
 		
 		background(0);
 		
+		//gWorld.noSmooth();
 		gWorld.beginDraw();
-		solarSystem.draw(gWorld);
+		world.solarSystem.draw(gWorld, world.time);
 		gWorld.endDraw();
 		
 		gUI.beginDraw();
 		gUI.background(200);
 		gUI.fill(0);
-		gUI.text("Offset / Zoom : " + solarSystem.viewOffset + " | " + solarSystem.viewZoom,10,12);
+		gUI.text("Offset / Zoom : " + world.solarSystem.viewOffset + " | " + world.solarSystem.viewZoom,10,12);
+		
+		int yOffset = 0;
+		for (String s : World.log) {
+			gUI.text(s,10,36 + yOffset);
+			yOffset += 12;
+		}
 		gUI.endDraw();
 		
 		image(gWorld,0,0);
@@ -51,15 +58,19 @@ public class Solar extends PApplet{
 		
 	}
 	
+	public void keyPressed() {
+		world.solarSystem.loadDemo();
+	}
+	
 	public void mouseDragged() {
 		int dx = mouseX - pmouseX;
 		int dy = mouseY - pmouseY;
 		
-		solarSystem.mouseDragged(dx, dy);
+		world.solarSystem.mouseDragged(dx, dy);
 	}
 	
 	public void mouseWheel(MouseEvent event) {
-		solarSystem.mouseWheel(event.getCount());
+		world.solarSystem.mouseWheel(event.getCount());
 	}
 	
 	public static void main(String[] args) {

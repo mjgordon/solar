@@ -1,4 +1,4 @@
-package sim;
+package sim_spatial;
 
 import processing.core.PVector;
 

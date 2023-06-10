@@ -1,10 +1,7 @@
-package sim;
+package sim_spatial;
 
 import java.util.ArrayList;
 
-import org.joml.Vector2d;
-
-import processing.core.PApplet;
 import processing.core.PVector;
 
 public class SolarBodyPhysics extends SolarBody {

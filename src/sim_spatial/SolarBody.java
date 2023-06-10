@@ -1,4 +1,4 @@
-package sim;
+package sim_spatial;
 
 import processing.core.PApplet;
 import processing.core.PVector;
@@ -14,7 +14,7 @@ public abstract class SolarBody {
 	
 	public int color;
 	
-	public float massFactor = 10;
+	public float massFactor = 1;
 	
 	
 	
